@@ -98,7 +98,7 @@ export type { Checkpoints } from "./@openzeppelin/contracts/utils/structs/Checkp
 export { Checkpoints__factory } from "./factories/@openzeppelin/contracts/utils/structs/Checkpoints__factory";
 export type { DoubleEndedQueue } from "./@openzeppelin/contracts/utils/structs/DoubleEndedQueue";
 export { DoubleEndedQueue__factory } from "./factories/@openzeppelin/contracts/utils/structs/DoubleEndedQueue__factory";
-export type { GovernorToken } from "./contracts/clock/GovernorToken";
-export { GovernorToken__factory } from "./factories/contracts/clock/GovernorToken__factory";
+export type { ERC20Token } from "./contracts/clock/ERC20Token";
+export { ERC20Token__factory } from "./factories/contracts/clock/ERC20Token__factory";
 export type { OZGovernor } from "./contracts/clock/OZGovernor";
 export { OZGovernor__factory } from "./factories/contracts/clock/OZGovernor__factory";

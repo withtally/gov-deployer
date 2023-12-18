@@ -42,7 +42,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
 		// TOKEN CONTRACT
 		// INFO LOGS
-		console.log("VETOR TOKEN ARGS");
+		console.log("TOKEN ARGS");
 		console.log("token name:\x1B[36m", config.token.name, "\x1B[37m");
 		console.log("token symbol:\x1B[36m", config.token.symbol, "\x1B[37m");
 		console.log("default admin:\x1B[33m", admin_address, "\x1B[37m");
@@ -69,9 +69,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 			address pauser,
 			address minter
 		*/
-		token = await deploy("GovernorToken", {
+		token = await deploy("ERC20Token", {
 			from: deployer,
-			contract: config.clockMode ? "contracts/clock/GovernorToken.sol:GovernorToken" : "contracts/GovernorToken.sol:GovernorToken",
+			contract: config.clockMode ? "contracts/clock/ERC20Token.sol:ERC20Token" : "contracts/ERC20Token.sol:ERC20Token",
 			args: args,
 			log: true,
 		});

@@ -2,9 +2,9 @@ import { ethers } from "hardhat";
 // import hardhat from "hardhat";
 
 import { getExpectedContractAddress } from "../../helpers/expected_contract";
-import { type OZGovernor, type TimelockController, type GovernorToken,  } from "../../types";
+import { type OZGovernor, type TimelockController, type ERC20Token,  } from "../../types";
 import { config } from "../../deploy.config"
-import { TimelockController__factory,GovernorToken__factory, OZGovernor__factory } from "../../types/factories/contracts";
+import { TimelockController__factory,ERC20Token__factory, OZGovernor__factory } from "../../types/factories/contracts";
 
 export async function deployGovernanceContractsFixture(): Promise<{
     token: GovernorToken;
@@ -22,7 +22,7 @@ export async function deployGovernanceContractsFixture(): Promise<{
     const admin_address = governance_address;
 
     // TOKEN CONTRACT
-    const GovernorToken = (await ethers.getContractFactory("contracts/GovernorToken.sol:GovernorToken")) as GovernorToken__factory
+    const GovernorToken = (await ethers.getContractFactory("contracts/ERC20Token.sol:ERC20Token")) as ERC20Token__factory
     const token = await GovernorToken.connect(deployerSigner).deploy(
         config.token.name,
         config.token.symbol,
@@ -72,7 +72,7 @@ export async function deployGovernanceContractsClockTimestampFixture(): Promise<
     const admin_address = governance_address;
 
     // TOKEN CONTRACT
-    const GovernorToken = (await ethers.getContractFactory("contracts/clock/GovernorToken.sol:GovernorToken")) as GovernorToken__factory
+    const GovernorToken = (await ethers.getContractFactory("contracts/clock/ERC20Token.sol:ERC20Token")) as ERC20Token__factory
     const token = await GovernorToken.connect(deployerSigner).deploy(
         config.token.name,
         config.token.symbol,

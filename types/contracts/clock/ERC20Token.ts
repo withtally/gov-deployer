@@ -21,7 +21,7 @@ import type {
   TypedLogDescription,
   TypedListener,
   TypedContractMethod,
-} from "../common";
+} from "../../common";
 
 export declare namespace Checkpoints {
   export type Checkpoint208Struct = {
@@ -35,7 +35,7 @@ export declare namespace Checkpoints {
   };
 }
 
-export interface GovernorTokenInterface extends Interface {
+export interface ERC20TokenInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "CLOCK_MODE"
@@ -490,11 +490,11 @@ export namespace UnpausedEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export interface GovernorToken extends BaseContract {
-  connect(runner?: ContractRunner | null): GovernorToken;
+export interface ERC20Token extends BaseContract {
+  connect(runner?: ContractRunner | null): ERC20Token;
   waitForDeployment(): Promise<this>;
 
-  interface: GovernorTokenInterface;
+  interface: ERC20TokenInterface;
 
   queryFilter<TCEvent extends TypedContractEvent>(
     event: TCEvent,

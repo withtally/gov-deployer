@@ -9,16 +9,16 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
 /**
- * @title GovernorToken
- * @dev GovernorToken is an ERC20 token with additional features such as burning, pausing, and minting,
+ * @title ERC20Token
+ * @dev ERC20Token is an ERC20 token with additional features such as burning, pausing, and minting,
  * along with AccessControl and Permit functionalities.
  */
-contract GovernorToken is ERC20, ERC20Burnable, ERC20Pausable, AccessControl, ERC20Permit, ERC20Votes {
+contract ERC20Token is ERC20, ERC20Burnable, ERC20Pausable, AccessControl, ERC20Permit, ERC20Votes {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     /**
-     * @dev Initializes the GovernorToken contract.
+     * @dev Initializes the ERC20Token contract.
      * @param _name The name of the token.
      * @param _symbol The symbol of the token.
      * @param defaultAdmin The default admin role holder.
@@ -98,5 +98,30 @@ contract GovernorToken is ERC20, ERC20Burnable, ERC20Pausable, AccessControl, ER
         returns (uint256)
     {
         return super.nonces(owner);
+    }
+
+      /**
+     * @dev Returns the current timestamp as a `uint48`.
+     * @return The current timestamp.
+     */
+    function clock() 
+        public 
+        view 
+        override 
+        returns (uint48) {
+        return uint48(block.timestamp);
+    }
+
+    /**
+     * @dev Returns the clock mode as a string.
+     * @return The clock mode.
+     */
+    function CLOCK_MODE()
+        public
+        view
+        virtual
+        override
+        returns (string memory) {
+        return "mode=timestamp";
     }
 }

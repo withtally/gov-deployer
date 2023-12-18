@@ -198,17 +198,17 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.DoubleEndedQueue__factory>;
     getContractFactory(
-      name: "GovernorToken",
+      name: "ERC20Token",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.GovernorToken__factory>;
+    ): Promise<Contracts.ERC20Token__factory>;
     getContractFactory(
       name: "OZGovernor",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.OZGovernor__factory>;
     getContractFactory(
-      name: "GovernorToken",
+      name: "ERC20Token",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.GovernorToken__factory>;
+    ): Promise<Contracts.ERC20Token__factory>;
     getContractFactory(
       name: "OZGovernor",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -449,20 +449,20 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.DoubleEndedQueue>;
     getContractAt(
-      name: "GovernorToken",
+      name: "ERC20Token",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
-    ): Promise<Contracts.GovernorToken>;
+    ): Promise<Contracts.ERC20Token>;
     getContractAt(
       name: "OZGovernor",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.OZGovernor>;
     getContractAt(
-      name: "GovernorToken",
+      name: "ERC20Token",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
-    ): Promise<Contracts.GovernorToken>;
+    ): Promise<Contracts.ERC20Token>;
     getContractAt(
       name: "OZGovernor",
       address: string | ethers.Addressable,
@@ -659,17 +659,17 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.DoubleEndedQueue>;
     deployContract(
-      name: "GovernorToken",
+      name: "ERC20Token",
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.GovernorToken>;
+    ): Promise<Contracts.ERC20Token>;
     deployContract(
       name: "OZGovernor",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.OZGovernor>;
     deployContract(
-      name: "GovernorToken",
+      name: "ERC20Token",
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.GovernorToken>;
+    ): Promise<Contracts.ERC20Token>;
     deployContract(
       name: "OZGovernor",
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -910,20 +910,20 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.DoubleEndedQueue>;
     deployContract(
-      name: "GovernorToken",
+      name: "ERC20Token",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.GovernorToken>;
+    ): Promise<Contracts.ERC20Token>;
     deployContract(
       name: "OZGovernor",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.OZGovernor>;
     deployContract(
-      name: "GovernorToken",
+      name: "ERC20Token",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.GovernorToken>;
+    ): Promise<Contracts.ERC20Token>;
     deployContract(
       name: "OZGovernor",
       args: any[],

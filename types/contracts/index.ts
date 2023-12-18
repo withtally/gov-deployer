@@ -3,6 +3,6 @@
 /* eslint-disable */
 import type * as clock from "./clock";
 export type { clock };
-export type { GovernorToken } from "./GovernorToken";
+export type { ERC20Token } from "./ERC20Token";
 export type { OZGovernor } from "./OZGovernor";
 export type { TimelockController } from "./TimelockController";
