@@ -6,7 +6,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import type { Signers } from "../types";
 
 import { deployGovernanceContractsFixture } from "./Governance.fixture";
-import { shouldBehaveLikeGovernor } from "./Goverance.behavior";
+import { shouldBehaveLikeGovernor, validProposals } from "./Goverance.behavior";
 
 describe("OZGovernor", async function () {
   before(async function () {
@@ -29,5 +29,4 @@ describe("OZGovernor", async function () {
   });
 
   shouldBehaveLikeGovernor();
-
 });
