@@ -4,7 +4,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { config } from "../deploy.config"
 import { getExpectedContractAddress } from '../helpers/expected_contract';
 import fs from "fs";
-import { GovernorToken, GovernorToken__factory } from "../types";
+import { ERC20Token, ERC20Token__factory } from "../types";
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 	console.log("\x1B[37mDeploying Open Zepellin Governance contracts");
@@ -94,6 +94,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 			` - ${hre.network.name} - block number: ${tdBlock?.number}\n${verify_str}\n\n`
 		);
 	})();
+	
 	//// deploy timelock
 	await (async function deployTimelock() {
 
@@ -155,6 +156,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 			` - ${hre.network.name} - block number: ${timelockBlock?.number}\n${verify_str_timelock}\n\n`
 		);
 	})();
+
 	//// deploy governor
 	await (async function deployGovernor() {
 
@@ -232,8 +234,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 		}
 
 		// Connect to the token contract
-		const Token = (await hre.ethers.getContractFactory("GovernorToken")) as GovernorToken__factory;
-		const tokenContract = (await Token.attach(token_address)) as GovernorToken;
+		const Token = (await hre.ethers.getContractFactory("ERC20Token")) as ERC20Token__factory;
+		const tokenContract = (await Token.attach(token_address)) as ERC20Token;
 
 		const _to = config.firstMint.to ? config.firstMint.to : deployer;
 		const _amount = config.firstMint.amount;
