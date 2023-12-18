@@ -1,43 +1,42 @@
-
-export const config:any ={
+export const config:any = {
   // Configuration for the deployment
   // Change the values for a more personalized deployment
-  token:{
+  token: {
     name: "WE LOVE TALLY TOKEN",
     symbol: "WLTT",
   },
   // Timelock
-  timelock:{
-    minDelay: 86400, // 12 days
+  timelock: {
+    minDelay: 86400, // 12 days (assuming 12 seconds per block)
   },
-  // true set clockMode as timestamp, false is block
+  // Set clockMode to true for timestamp mode, false for block number mode
   clockMode: false,
   // Governor
-  governor:{
+  governor: {
     name: "WE LOVE TALLY DAO",
-    // 7200 1 day
+    // 7200 is 24 hours (assuming 12 seconds per block)
     votingDelay: 7200,
-    // 50400 7 days
+    // 50400 is 7 days (assuming 12 seconds per block)
     votingPeriod: 50400,
-    // numerator to denominator of 100
+    // Quorum numerator to denominator of 100
     quorumNumerator: 4,
-    // threshold to be able to propose
-    proposalThreshold: 0, // if you want to prevent proposal spam, you should set the threshold to value diff from zero.
-    // vote extension, if a late quorum is reached how much you want to extend it ?
-    voteExtension: 7200, // 7200 would be a day.
+    // Threshold to be able to propose
+    proposalThreshold: 0, // Set a non-zero value to prevent proposal spam.
+    // Vote extension: if a late quorum is reached, how long should it be extended?
+    voteExtension: 7200, // 7200 is 24 hours (assuming 12 seconds per block)
   },
-  // First Mint is used to mint the first tokens to this governance
-  // it has to be higher than the proposalThreshold
-  // so it is enough tokens to the governance to be able to propose
+  // First Mint is used to mint the initial tokens for this governance
+  // It must be higher than the proposalThreshold
+  // so there are enough tokens for the governance to be able to propose
   // 
   // ATTENTION:
-  // If amount is not higher then 0 it will not mint any tokens and also maintain roles for the deployer
-  // keep it as ZERO if you plan on doing manual changes and mints, before locking it up to be controlled by governor contracts.
+  // If the amount is not higher than 0, it will not mint any tokens and will also maintain roles for the deployer.
+  // Keep it as ZERO if you plan on doing manual changes and mints, before locking it up to be controlled by governor contracts.
   // 
-  // after the first mint, the deployer will lose the minter and admin role and give it to the timelock which is the executor.
-  firstMint:{
-    amount: 0, // if set as higher then zero, it will mint the amount of tokens to the address below
-    // To is an Ethereum Address, if empty, it will be the deployer, also it not correct, it will be the deployer ( warned when deploying )
+  // After the first mint, the deployer will lose the minter and admin role and give it to the timelock, which is the executor.
+  firstMint: {
+    amount: 0, // If set higher than zero, it will mint the specified amount of tokens to the address below
+    // 'to' is an Ethereum Address. If empty, it will default to the deployer. If incorrect, it will also default to the deployer (a warning will be issued when deploying).
     to: "",
   }
 }
