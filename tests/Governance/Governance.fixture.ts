@@ -76,8 +76,8 @@ export async function deployGovernanceContractsClockTimestampFixture(): Promise<
     const token = await GovernorToken.connect(deployerSigner).deploy(
         config.token.name,
         config.token.symbol,
-        admin_address,
-        admin_address,
+        deployerSigner.address,
+        deployerSigner.address,
         deployerSigner.address,
     );
 
