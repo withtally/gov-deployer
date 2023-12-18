@@ -4,6 +4,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { config } from "../deploy.config"
 import { getExpectedContractAddress } from '../helpers/expected_contract';
 import fs from "fs";
+import { GovernorToken, GovernorToken__factory } from "../types";
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 	console.log("\x1B[37mDeploying Open Zepellin Governance contracts");
@@ -96,6 +97,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 	//// deploy timelock
 	await (async function deployTimelock() {
 
+		// governor and timelock as proposers and executors to guarantee that the DAO will be able to propose and execute
 		const executors = [admin_address, timelock_address];
 		const proposers = [admin_address, timelock_address];
 		// TIMELOCK CONTRACT
@@ -214,6 +216,49 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 			` - ${hre.network.name} - block number: ${govBlock?.number}\n${verify_str}\n\n`
 		);
 	})();
+
+	// MINTING the first amount and managing roles to remove it to deployer granting it only to the timelock.
+	await(async function mintAndRolesManagement(){
+
+		// check if config.firstMint.to is valid address
+		if ( config.firstMint.amount <= 0 ) {
+			console.log("No first mint amount set, skipping minting and roles management");
+			return;
+		}
+
+		if ( !hre.ethers.isAddress(config.firstMint.to) && config.firstMint.to != "") {
+			console.log("First mint address is not valid, skipping minting and roles management");
+			return;
+		}
+
+		// Connect to the token contract
+		const Token = (await hre.ethers.getContractFactory("GovernorToken")) as GovernorToken__factory;
+		const tokenContract = (await Token.attach(token_address)) as GovernorToken;
+
+		const _to = config.firstMint.to ? config.firstMint.to : deployer;
+		const _amount = config.firstMint.amount;
+
+		// Mint tokens to the receiving address
+		await tokenContract.mint(_to, _amount)
+		console.log(`Minted ${_amount} tokens to ${_to}`);
+
+		// Grant the minter role to the receiving address
+		await tokenContract.grantRole(await tokenContract.MINTER_ROLE(), timelock_address);
+		console.log(`Minter role granted to ${minter}`);
+
+		// Grant the admin role to the receiving address
+		await tokenContract.grantRole(await tokenContract.DEFAULT_ADMIN_ROLE(), timelock_address);
+		console.log(`Default admin role granted to ${admin_address}`);
+
+		// Revoke the minter role from the caller
+		await tokenContract.revokeRole(await tokenContract.MINTER_ROLE(), deployer);
+		console.log(`Minter role revoked from ${admin_address}`);
+
+		// Revoke the minter role from the caller
+		await tokenContract.revokeRole(await tokenContract.DEFAULT_ADMIN_ROLE(), deployer);
+		console.log(`Minter role revoked from ${admin_address}`);
+	})();
+
 	// ending line
 	fs.appendFileSync(
 		"contracts.out",

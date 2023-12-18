@@ -29,8 +29,13 @@ export const config:any ={
   // First Mint is used to mint the first tokens to this governance
   // it has to be higher than the proposalThreshold
   // so it is enough tokens to the governance to be able to propose
+  // 
+  // ATTENTION:
+  // If amount is not higher then 0 it will not mint any tokens and also maintain roles for the deployer
+  // 
+  // after the first mint, the deployer will lose the minter and admin role and give it to the timelock which is the executor.
   firstMint:{
-    amount: 1000000,
+    amount: 0, // if set as higher then zero, it will mint the amount of tokens to the address below
     // To is an Ethereum Address, if empty, it will be the deployer, also it not correct, it will be the deployer ( warned when deploying )
     to: "",
   }
