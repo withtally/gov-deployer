@@ -23,13 +23,27 @@ task("grant_revoke_minter_role", "Grants and revokes the minter role")
 
         /* When first deployed the minter and admin is the deployer, otherwise no minting amount would be possible */
 
+        // check if token, to and admin are valid addresses
+        if ( !ethers.isAddress(token) || !ethers.isAddress(admin) || (to && !ethers.isAddress(to)) ) {
+            if (!ethers.isAddress(token)) {
+                console.log("Token address is not valid");
+            }
+            if (!ethers.isAddress(admin)) {
+                console.log("Admin address is not valid");
+            }
+            if (to && !ethers.isAddress(to)) {
+                console.log("Receiving address is not valid");
+            }
+            return;
+        }
+
         // const signer: ethers.Signer = await ethers.getSigner();
         const signers = await ethers.getSigners();
         const signer = signers[0];
 
         // Connect to the token contract
-        const Token = await ethers.getContractFactory("Token");
-        const tokenContract = await Token.attach(token);
+		const Token = (await ethers.getContractFactory("GovernorToken")) as GovernorToken__factory;
+		const tokenContract = (await Token.attach(token)) as GovernorToken;
 
         const _to = to ? to:  signer;
 

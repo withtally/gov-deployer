@@ -32,6 +32,7 @@ export const config:any ={
   // 
   // ATTENTION:
   // If amount is not higher then 0 it will not mint any tokens and also maintain roles for the deployer
+  // keep it as ZERO if you plan on doing manual changes and mints, before locking it up to be controlled by governor contracts.
   // 
   // after the first mint, the deployer will lose the minter and admin role and give it to the timelock which is the executor.
   firstMint:{
