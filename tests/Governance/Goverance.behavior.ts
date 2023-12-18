@@ -7,6 +7,30 @@ import {
 import { mine } from "@nomicfoundation/hardhat-network-helpers";
 
 
+const validProposal :(this:any) => Promise<T> = async function (this:any) {
+    // Assuming `this` has necessary contract instances and signers
+    const { governor, token, signers } = this;
+
+    // Define proposal parameters
+    const targets = [token.address];
+    const values = [0];
+    const calldatas = [token.interface.encodeFunctionData("mint", [signers.admin.address, 1000])];
+    const description = "Proposal #1: Mint 1000 tokens";
+
+    // Create proposal
+    const createTx = await governor.propose(targets, values, calldatas, description);
+    const receipt = await createTx.wait();
+    
+    // Expect a ProposalCreated event
+    expect(receipt.events.some((e) => e.event === "ProposalCreated")).to.be.true;
+
+    // Extract the proposalId from the event
+    const proposalId = receipt.events.find((e) => e.event === "ProposalCreated").args.proposalId;
+    expect(proposalId).to.exist;
+
+    this.proposalId = proposalId;
+}
+
 export async function shouldBehaveLikeGovernor(): Promise<void> {
     it("should receive answer from CLOCK_MODE", async function () {
         const { governor, _, } = this;
@@ -16,7 +40,7 @@ export async function shouldBehaveLikeGovernor(): Promise<void> {
         expect(clock_mode).to.be.equal("mode=blocknumber&from=default");
     });
 
-    it("clock shoudl return current block number", async function () {
+    it("clock should return the current block number", async function () {
         const { governor, _, } = this;
 
         const clock = await governor.clock();
@@ -108,4 +132,24 @@ export async function shouldBehaveLikeGovernor(): Promise<void> {
         const balance = await token.balanceOf(signers.admin.address);
         expect(balance).to.be.equal(11000n);
     });
+
+
+    it("should allow creation of valid proposals", async function () {
+        await validProposal(this);
+    });
+
+    it("should allow eligible voters to cast votes", async function () {
+        await validProposal(this);
+
+        // Assuming a proposal has been created and `proposalId` is available
+        const { governor, proposalId } = this;
+    
+        // Cast a vote (1 for 'For')
+        await governor.castVote(proposalId, 1);
+    
+        // Check the vote count
+        const proposalVotes = await governor.proposalVotes(proposalId);
+        expect(proposalVotes.forVotes).to.be.greaterThan(0);
+    });
+    
 }
