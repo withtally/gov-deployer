@@ -46,8 +46,7 @@ Interested in premium DAO solutions? Check out [Tally's premium features](https:
 
 ```bash
 git clone https://github.com/withtally/gov-deployer.git
-cd gov_deployer
-git checkout new
+cd gov-deployer
 pnpm install
 cp .env.example .env
 # Configure .env as needed (e.g., node RPCs)
