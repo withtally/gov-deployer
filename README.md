@@ -45,7 +45,7 @@ Interested in premium DAO solutions? Check out [Tally's premium features](https:
 ### Installation
 
 ```bash
-git clone https://github.com/withtally/gov_deployer.git
+git clone https://github.com/withtally/gov-deployer.git
 cd gov_deployer
 git checkout new
 pnpm install
