@@ -65,9 +65,7 @@
     "solidity-coverage": "^0.8.5",
     "ts-node": "^10.9.1",
     "typechain": "^8.2.0",
-    "typescript": "^4.9.3"
-  },
-  "dependencies": {
+    "typescript": "^4.9.3",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-n": "^16.4.0",
     "eslint-plugin-promise": "^6.1.1"
