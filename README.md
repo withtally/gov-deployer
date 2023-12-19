@@ -129,4 +129,6 @@ Explore governance workflows through diagrams in our [visual guide](VISUAL_GUIDE
 
 ## ⚖️ License
 
-OZGovernor is released under [LICENSE_NAME]. For details, see [LICENSE](LICENSE.md).
+The whole repo and it's contracts are released under MIT license. 
+
+For details, see [LICENSE](LICENSE.txt).
