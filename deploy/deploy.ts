@@ -138,6 +138,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 			`${config.timelock.minDelay},` +
 			`${JSON.stringify(proposers)},` +
 			`${JSON.stringify(executors)},` +
+			`${timelock_address}` +
 			`];`
 		);
 
