@@ -99,8 +99,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 	await (async function deployTimelock() {
 
 		// governor and timelock as proposers and executors to guarantee that the DAO will be able to propose and execute
-		const executors = [admin_address, timelock_address];
 		const proposers = [admin_address, timelock_address];
+		const executors = [admin_address, timelock_address];
+		
 		// TIMELOCK CONTRACT
 		// INFO LOGS
 		console.log("TIMELOCK ARGS");
@@ -138,13 +139,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 			`${config.timelock.minDelay},` +
 			`${JSON.stringify(proposers)},` +
 			`${JSON.stringify(executors)},` +
-			`${timelock_address}` +
+			`"${timelock_address}"` +
 			`];`
 		);
 
 		// verify cli command
 		const verify_str_timelock = `npx hardhat verify ` +
 			`--network ${hre.network.name} ` +
+			`--contract "contracts/TimelockController.sol:TimelockController"` +
 			`--constructor-args arguments_${timelock.address}.js ` +
 			`${timelock.address}\n`;
 		console.log("\n" + verify_str_timelock);
