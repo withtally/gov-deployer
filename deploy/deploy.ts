@@ -84,7 +84,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 		let verify_str =
 			`npx hardhat verify ` +
 			`--network ${hre.network.name} ` +
-			`${token_address} "${config.token.name}" "${config.token.symbol}" ${admin_address} ${admin_address} ${minter}`
+			`${token_address} "${config.token.name}" "${config.token.symbol}" ${minter} ${minter} ${minter}`
 		console.log("\n" + verify_str + "\n");
 
 		// save it to a file to make sure the user doesn't lose it.
