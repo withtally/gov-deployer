@@ -5,6 +5,8 @@ import {
     EventLog,
 } from "ethers";
 import { mine } from "@nomicfoundation/hardhat-network-helpers";
+import hre from "hardhat";
+
 
 export async function shouldBehaveLikeGovernor(): Promise<void> {
 
@@ -382,9 +384,10 @@ export async function shouldBehaveLikeGovernorWithTimestamp(): Promise<void> {
         // try to cast before voting delay and fails
         await expect( governor.castVote(proposalId, 1)).to.be.reverted;
 
-        const numberOfBlocks = Number(await governor.votingDelay()) + 100;
-        await mine(numberOfBlocks);
-
+        const votingDelay = Number(await governor.votingDelay()) + 100;
+        await hre.network.provider.send("evm_increaseTime", [votingDelay]);
+        await hre.network.provider.send("evm_mine");
+  
         // Vote
         await expect( governor.castVote(proposalId, 1n)).to.emit(governor, "VoteCast");
 
@@ -394,9 +397,10 @@ export async function shouldBehaveLikeGovernorWithTimestamp(): Promise<void> {
        await  expect( governor.queue(proposalId)).to.be.reverted;
 
         // Wait for voting period to end
-        // await ethers.provider.send("evm_increaseTime", [86400]); // Increase time by 1 day
-        // await ethers.provider.send("evm_mine"); // Mine a new block
-        await mine(Number(await governor.votingPeriod()) + 100);
+        const votingPeriod = Number(await governor.votingPeriod()) + 100;
+        await hre.network.provider.send("evm_increaseTime", [votingPeriod]);
+        await hre.network.provider.send("evm_mine");
+  
 
         // expect proposal state to be succeeded
         let proposalState = await governor.state(proposalId);
@@ -414,7 +418,9 @@ export async function shouldBehaveLikeGovernorWithTimestamp(): Promise<void> {
 
         // Simulate time delay required before execution
         // Replace 'executionDelay' with your contract's specific delay
-        await mine( 86400 +1);
+        const executionDelay =  Number(await timelock.getMinDelay() + 1n);
+        await hre.network.provider.send("evm_increaseTime", [executionDelay]);
+        await hre.network.provider.send("evm_mine");
 
         // Execute proposal
         await expect( governor.execute(proposalId)).to.emit(governor, "ProposalExecuted");
@@ -527,8 +533,9 @@ export async function shouldBehaveLikeGovernorWithTimestamp(): Promise<void> {
         // Get the proposalId from the event arguments
         const proposalId = logDescription?.args["proposalId"]
 
-        const numberOfBlocks = Number(await governor.votingDelay()) + 100;
-        await mine(numberOfBlocks);
+        const votingDelay =  Number(await governor.votingDelay() + 100n);
+        await hre.network.provider.send("evm_increaseTime", [votingDelay]);
+        await hre.network.provider.send("evm_mine");
 
         // try to cancel it
         await expect( governor.cancel(proposalId)).to.be.reverted;
@@ -583,17 +590,17 @@ export async function shouldBehaveLikeGovernorWithTimestamp(): Promise<void> {
         // Get the proposalId from the event arguments
         const proposalId = logDescription?.args["proposalId"]
 
-
-        const numberOfBlocks = Number(await governor.votingDelay()) + 100;
-        await mine(numberOfBlocks);
+        const votingDelay =  Number(await governor.votingDelay() + 100n);
+        await hre.network.provider.send("evm_increaseTime", [votingDelay]);
+        await hre.network.provider.send("evm_mine");
 
         // Vote
         await expect( governor.castVote(proposalId,0)).to.emit(governor, "VoteCast");
 
         // Wait for voting period to end
-        // await ethers.provider.send("evm_increaseTime", [86400]); // Increase time by 1 day
-        // await ethers.provider.send("evm_mine"); // Mine a new block
-        await mine(Number(await governor.votingPeriod()) + 100);
+        const votingPeriod =  Number(await governor.votingPeriod() + 100n);
+        await hre.network.provider.send("evm_increaseTime", [votingPeriod]);
+        await hre.network.provider.send("evm_mine");
 
         // expect state to be deafeated
         const proposalState = await governor.state(proposalId);
