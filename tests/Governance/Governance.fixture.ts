@@ -2,12 +2,12 @@ import { ethers } from "hardhat";
 // import hardhat from "hardhat";
 
 import { getExpectedContractAddress } from "../../helpers/expected_contract";
-import { type OZGovernor, type TimelockController, type ERC20Token,  } from "../../types";
+import { type OZGovernor, type TimelockController, type ERC20Token, ERC20,  } from "../../types";
 import { config } from "../../deploy.config"
 import { TimelockController__factory,ERC20Token__factory, OZGovernor__factory } from "../../types/factories/contracts";
 
 export async function deployGovernanceContractsFixture(): Promise<{
-    token: GovernorToken;
+    token: ERC20Token;
     timelock: TimelockController;
     governor: OZGovernor;
 }> {
@@ -57,7 +57,7 @@ export async function deployGovernanceContractsFixture(): Promise<{
 }
 
 export async function deployGovernanceContractsClockTimestampFixture(): Promise<{
-    token: GovernorToken;
+    token: ERC20;
     timelock: TimelockController;
     governor: OZGovernor;
 }> {
