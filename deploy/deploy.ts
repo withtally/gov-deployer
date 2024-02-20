@@ -237,7 +237,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 		}
 
 		// Connect to the token contract
-		const Token = (await hre.ethers.getContractFactory("ERC20Token")) as ERC20Token__factory;
+		const Token = (await hre.ethers.getContractFactory(config.clockMode ? "contracts/clock/ERC20Token.sol:ERC20Token" : "contracts/ERC20Token.sol:ERC20Token")) as ERC20Token__factory;
 		const tokenContract = (await Token.attach(token_address)) as ERC20Token;
 
 		const _to = config.firstMint.to ? config.firstMint.to : deployer;
