@@ -1,4 +1,4 @@
-import { type ChatCompletionCreateParams } from 'openai/resources/chat';
+import type { ChatCompletionCreateParams } from "openai/resources/chat/completions";
 import { convertUnits, toWei, fromWei } from '../functions';
 
 type OpenAIFunction = ChatCompletionCreateParams.Function;

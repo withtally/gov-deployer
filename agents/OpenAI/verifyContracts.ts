@@ -1,4 +1,4 @@
-import { type ChatCompletionCreateParams } from 'openai/resources/chat';
+import type { ChatCompletionCreateParams } from "openai/resources/chat/completions";
 import { verifyToken, verifyTimelock, verifyGovernor } from '../functions/verifyContracts';
 
 type OpenAIFunction = ChatCompletionCreateParams.Function;
