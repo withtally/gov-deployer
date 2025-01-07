@@ -2,6 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { deployToken } from "../functions";
 import { initializeGovernanceDeployer } from "../context";
+import { getExpectedContractAddress } from "../../helpers/expected_contract";
 
 describe("Token Deployment", () => {
   beforeEach(async () => {
@@ -9,8 +10,10 @@ describe("Token Deployment", () => {
     initializeGovernanceDeployer(signer, "hardhat");
   });
 
-  it("should deploy token with correct parameters", async () => {
+  it("should deploy token with correct parameters and address", async () => {
     const [signer] = await ethers.getSigners();
+    const expectedAddress = await getExpectedContractAddress(signer, 0);
+    
     const params = {
       name: "Test Token",
       symbol: "TEST",
@@ -21,7 +24,7 @@ describe("Token Deployment", () => {
 
     const { contract, address } = await deployToken(params);
     
-    expect(address).to.be.properAddress;
+    expect(address).to.equal(expectedAddress);
     expect(await contract.name()).to.equal(params.name);
     expect(await contract.symbol()).to.equal(params.symbol);
   });
