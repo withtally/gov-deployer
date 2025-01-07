@@ -4,6 +4,7 @@ import "hardhat-deploy";
 import "hardhat-gas-reporter";
 import "@typechain/hardhat";
 import "@nomicfoundation/hardhat-ethers";
+import "@nomicfoundation/hardhat-toolbox";
 import type { HardhatUserConfig } from "hardhat/config";
 import { vars } from "hardhat/config";
 import { getChainConfig } from "./chain.config";
@@ -137,7 +138,7 @@ const config: HardhatUserConfig = {
     artifacts: "./artifacts",
     cache: "./cache",
     sources: "./contracts",
-    tests: "./tests",
+    tests: ["./tests", "./agents/tests"],
   },
   typechain: {
     outDir: "typechain-types",

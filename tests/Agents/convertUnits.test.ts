@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { convertUnits, toWei, fromWei } from "../functions";
+import { convertUnits, toWei, fromWei } from "../../agents/functions";
 
 describe("Unit Conversion Functions", () => {
   it("should convert between units correctly", () => {

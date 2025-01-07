@@ -1,8 +1,8 @@
 import { expect } from "chai";
-import { verifyToken, verifyTimelock, verifyGovernor } from "../functions/verifyContracts";
-import { deployToken, deployTimelock, deployGovernor } from "../functions";
-import { initializeGovernanceDeployer } from "../context";
 import { ethers } from "hardhat";
+import { verifyToken, verifyTimelock, verifyGovernor } from "../../agents/functions/verifyContracts";
+import { deployToken, deployTimelock, deployGovernor } from "../../agents/functions";
+import { initializeGovernanceDeployer } from "../../agents/context";
 
 describe("Contract Verification", () => {
   beforeEach(async () => {
@@ -32,7 +32,7 @@ describe("Contract Verification", () => {
         symbol: "TEST",
         minter: signerAddress
       });
-    } catch (error) {
+    } catch (error: any) {
       expect(error.message).to.include("hardhat");
     }
   });

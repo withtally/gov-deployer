@@ -2,8 +2,8 @@ import { expect } from "chai";
 import { loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
 import { ethers } from "hardhat";
-import { deployGovernor, deployToken, deployTimelock } from "../functions";
-import { initializeGovernanceDeployer } from "../context";
+import { deployGovernor, deployToken, deployTimelock } from "../../agents/functions";
+import { initializeGovernanceDeployer } from "../../agents/context";
 import { getExpectedContractAddress } from "../../helpers/expected_contract";
 
 describe("Governor Deployment", () => {
