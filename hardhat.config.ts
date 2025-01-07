@@ -2,6 +2,8 @@ import "dotenv/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-deploy";
 import "hardhat-gas-reporter";
+import "@typechain/hardhat";
+import "@nomicfoundation/hardhat-ethers";
 import type { HardhatUserConfig } from "hardhat/config";
 import { vars } from "hardhat/config";
 import { getChainConfig } from "./chain.config";
@@ -138,7 +140,7 @@ const config: HardhatUserConfig = {
     tests: "./tests",
   },
   typechain: {
-    outDir: "types",
+    outDir: "typechain-types",
     target: "ethers-v6",
   },
 };
