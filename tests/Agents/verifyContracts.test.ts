@@ -26,7 +26,7 @@ describe("Contract Verification", () => {
     // This test is more for checking the function structure
     try {
       await verifyToken({
-        network: "hardhat",
+        network: hre.network.name,
         address,
         name: "Test Token",
         symbol: "TEST",

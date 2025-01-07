@@ -95,7 +95,13 @@ export async function shouldBehaveLikeGovernor(): Promise<void> {
         await expect( governor.castVote(proposalId, 1)).to.be.reverted;
 
         const numberOfBlocks = Number(await governor.votingDelay()) + 100;
-        await mine(numberOfBlocks);
+        if (hre.network.name === "hardhat") {
+            await mine(numberOfBlocks);
+        } else {
+            // Skip these tests on public networks
+            console.log("Skipping block manipulation tests on public network");
+            return;
+        }
 
         // Vote
         await expect( governor.castVote(proposalId, 1n)).to.emit(governor, "VoteCast");
@@ -240,7 +246,13 @@ export async function shouldBehaveLikeGovernor(): Promise<void> {
         const proposalId = logDescription?.args["proposalId"]
 
         const numberOfBlocks = Number(await governor.votingDelay()) + 100;
-        await mine(numberOfBlocks);
+        if (hre.network.name === "hardhat") {
+            await mine(numberOfBlocks);
+        } else {
+            // Skip these tests on public networks
+            console.log("Skipping block manipulation tests on public network");
+            return;
+        }
 
         // try to cancel it
         await expect( governor.cancel(proposalId)).to.be.reverted;
@@ -297,7 +309,13 @@ export async function shouldBehaveLikeGovernor(): Promise<void> {
 
 
         const numberOfBlocks = Number(await governor.votingDelay()) + 100;
-        await mine(numberOfBlocks);
+        if (hre.network.name === "hardhat") {
+            await mine(numberOfBlocks);
+        } else {
+            // Skip these tests on public networks
+            console.log("Skipping block manipulation tests on public network");
+            return;
+        }
 
         // Vote
         await expect( governor.castVote(proposalId,0)).to.emit(governor, "VoteCast");
