@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { deployToken } from "../functions";
-import { initializeGovernanceDeployer } from "../context";
+import { deployToken } from "../../agents/functions";
+import { initializeGovernanceDeployer } from "../../agents/context";
 import { getExpectedContractAddress } from "../../helpers/expected_contract";
 
 describe("Token Deployment", () => {

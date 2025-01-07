@@ -1,5 +1,4 @@
 import "dotenv/config";
-import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-deploy";
 import "hardhat-gas-reporter";
 import "@typechain/hardhat";
@@ -138,7 +137,7 @@ const config: HardhatUserConfig = {
     artifacts: "./artifacts",
     cache: "./cache",
     sources: "./contracts",
-    tests: ["./tests", "./agents/tests"],
+    tests: "./tests",
   },
   typechain: {
     outDir: "typechain-types",

@@ -6,7 +6,15 @@ import {
 } from "ethers";
 import { mine } from "@nomicfoundation/hardhat-network-helpers";
 import hre from "hardhat";
+import { OZGovernor, GovernorTimelockControl } from "../../typechain-types";
 
+// Update the governor type in the test context
+declare module "mocha" {
+  interface Context {
+    governor: GovernorTimelockControl;  // Instead of OZGovernor
+    // ... other context properties
+  }
+}
 
 export async function shouldBehaveLikeGovernor(): Promise<void> {
 

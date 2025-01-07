@@ -6,7 +6,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import type { Signers } from "../types";
 
 import { deployGovernanceContractsClockTimestampFixture, deployGovernanceContractsFixture } from "./Governance.fixture";
-import { shouldBehaveLikeGovernor, shouldBehaveLikeGovernorWithTimestamp } from "./Goverance.behavior";
+import { shouldBehaveLikeGovernor, shouldBehaveLikeGovernorWithTimestamp } from "./Governance.behavior";
 
 describe("OZGovernor", async function () {
   before(async function () {
