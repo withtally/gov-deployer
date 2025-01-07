@@ -10,7 +10,6 @@ const addressSchema = z.string().refine(
 
 // Token deployment schema
 export const tokenDeploySchema = z.object({
-  signer: z.any(), // Can't strictly type Signer with Zod
   name: z.string().min(1),
   symbol: z.string().min(1),
   defaultAdmin: addressSchema,
@@ -20,7 +19,6 @@ export const tokenDeploySchema = z.object({
 
 // Timelock deployment schema
 export const timelockDeploySchema = z.object({
-  signer: z.any(),
   minDelay: z.number().nonnegative(),
   proposers: z.array(addressSchema),
   executors: z.array(addressSchema),
@@ -29,7 +27,6 @@ export const timelockDeploySchema = z.object({
 
 // Governor deployment schema
 export const governorDeploySchema = z.object({
-  signer: z.any(),
   name: z.string().min(1),
   token: addressSchema,
   timelock: addressSchema,

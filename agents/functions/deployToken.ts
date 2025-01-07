@@ -1,12 +1,14 @@
-import { Signer } from "ethers";
-import { ERC20Token__factory } from "../../typechain-types";
 import { TokenDeployParams, tokenDeploySchema, DeployTokenReturn } from "./schemas";
+import { getGovernanceDeployer } from "../context";
+import { ERC20Token__factory } from "../../typechain-types";
 
-export async function deployToken(params: TokenDeployParams): Promise<DeployTokenReturn> {
-  // Validate inputs
+export async function deployToken(params: Omit<TokenDeployParams, 'signer'>): Promise<DeployTokenReturn> {
   tokenDeploySchema.parse(params);
+  
+  const deployer = getGovernanceDeployer();
+  const signer = deployer.getSigner();
 
-  const tokenFactory = new ERC20Token__factory(params.signer);
+  const tokenFactory = new ERC20Token__factory(signer);
   const token = await tokenFactory.deploy(
     params.name,
     params.symbol,
@@ -15,9 +17,11 @@ export async function deployToken(params: TokenDeployParams): Promise<DeployToke
     params.minter
   );
   
-  // Wait for deployment and get address
   await token.waitForDeployment();
   const address = await token.getAddress();
+
+  // Store in context
+  deployer.setDeployedContract('token', address, token);
   
   return { contract: token, address };
 } 
