@@ -1,6 +1,6 @@
 import { writeFileSync } from 'fs';
-import { execSync } from 'child_process';
 import { z } from 'zod';
+import { run } from "hardhat";
 
 // Validation schemas
 const verifyTokenSchema = z.object({
@@ -36,10 +36,17 @@ const verifyGovernorSchema = z.object({
 export async function verifyToken(params: z.infer<typeof verifyTokenSchema>) {
   verifyTokenSchema.parse(params);
   
-  const command = `npx hardhat verify --network ${params.network} ${params.address} "${params.name}" "${params.symbol}" ${params.minter} ${params.minter} ${params.minter}`;
-  
   try {
-    execSync(command, { stdio: 'inherit' });
+    await run("verify:verify", {
+      address: params.address,
+      constructorArguments: [
+        params.name,
+        params.symbol,
+        params.minter,
+        params.minter,
+        params.minter
+      ],
+    });
     return true;
   } catch (error) {
     console.error('Token verification failed:', error);
@@ -50,15 +57,17 @@ export async function verifyToken(params: z.infer<typeof verifyTokenSchema>) {
 export async function verifyTimelock(params: z.infer<typeof verifyTimelockSchema>) {
   verifyTimelockSchema.parse(params);
   
-  // Create arguments file
-  const argsContent = `module.exports = [${params.minDelay},${JSON.stringify(params.proposers)},${JSON.stringify(params.executors)},"${params.admin}"];`;
-  const argsFile = `arguments_${params.address}.js`;
-  writeFileSync(argsFile, argsContent);
-  
-  const command = `npx hardhat verify --network ${params.network} --contract "contracts/TimelockController.sol:TimelockController" --constructor-args ${argsFile} ${params.address}`;
-  
   try {
-    execSync(command, { stdio: 'inherit' });
+    await run("verify:verify", {
+      address: params.address,
+      contract: "contracts/TimelockController.sol:TimelockController",
+      constructorArguments: [
+        params.minDelay,
+        params.proposers,
+        params.executors,
+        params.admin
+      ],
+    });
     return true;
   } catch (error) {
     console.error('Timelock verification failed:', error);
@@ -69,10 +78,20 @@ export async function verifyTimelock(params: z.infer<typeof verifyTimelockSchema
 export async function verifyGovernor(params: z.infer<typeof verifyGovernorSchema>) {
   verifyGovernorSchema.parse(params);
   
-  const command = `npx hardhat verify --network ${params.network} ${params.address} "${params.name}" ${params.token} ${params.timelock} ${params.votingDelay} ${params.votingPeriod} ${params.proposalThreshold} ${params.quorumNumerator} ${params.voteExtension}`;
-  
   try {
-    execSync(command, { stdio: 'inherit' });
+    await run("verify:verify", {
+      address: params.address,
+      constructorArguments: [
+        params.name,
+        params.token,
+        params.timelock,
+        params.votingDelay,
+        params.votingPeriod,
+        params.proposalThreshold,
+        params.quorumNumerator,
+        params.voteExtension
+      ],
+    });
     return true;
   } catch (error) {
     console.error('Governor verification failed:', error);
