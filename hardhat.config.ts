@@ -59,7 +59,7 @@ const config: HardhatUserConfig = {
         network: "base",
         chainId: 8453,
         urls: {
-          apiURL: "https://basescan.io/api",
+          apiURL: "https://api.basescan.org/api",
           browserURL: "https://basescan.io",
         },
       },
